@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - FFC: Survey Form</title>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"><link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+
+
+<main>
+  <div class="w3-container w3-blue">
+    <h1 id="title">Let us know more about your case!</h1>
+    <p id="description">
+      We will need this information to decide whether you are an 
+      appropriate candidate <br> for our research. Thanks for your patience!
+    </p>
+  </div>
+  <div id="container">
+    <form id="survey-form" class="w3-container">
+
+      <div class="block">
+        <label for="name" id="name-label">Your name</label>
+        <input type="name" id="name" placeholder="name" class="w3-input" required>
+      </div>
+
+      <div class="block">
+        <label for="email" id="email-label">Your email</label>
+        <input type="email" id="email" placeholder="email@example.com" class="w3-input" required>
+      </div>
+
+      <div class="block">
+        <label for="number" id="number-label">How much of your potatoes are still green?</label>
+        <input type="number" min="2" max="20" id="number" class="w3-input" placeholder="number">
+      </div>
+
+      <div class="block">
+        <label for="dropdown">Select the potatoes sort:</label>
+        <select id="dropdown" class="w3-select">
+          <option value="">--Please choose an option--</option>
+          <option value="Russet">Russet Potatoes</option>
+          <option value="Red">Red Potatoes</option>
+          <option value="White">White Potatoes</option>
+          <option value="Yellow">Yellow Potatoes</option>
+          <option value="Purple">Purple Potatoes</option>
+          <option value="Fingerling">Fingerling Potatoes</option>
+          <option value="Petite">Petite Potatoes</option>
+        </select>
+      </div>
+
+      <div class="block labelMargin">
+        <label class="except">What is the size of your garden?</label>
+        <label>
+          <input value="over" type="radio" name="size" class="w3-radio w3-light-grey">
+          over 1dka
+        </label>
+        <label>
+          <input value="under" type="radio" name="size" class="w3-radio">
+          under 1dka
+        </label>
+      </div>
+
+      <div class="block labelMargin">
+        <label class="except">Have you ever used one or more of the following pesticides?</label>
+        <div class="sub-block">
+          <label>
+            <input type="checkbox" value="Chlorpropham" class="w3-check"> 
+            Chlorpropham
+          </label> 
+          <label>
+            <input type="checkbox" value="Imidacloprid" class="w3-check">
+            Imidacloprid
+          </label> 
+          <label>
+            <input type="checkbox" value="Flutolanil" class="w3-check">
+            Flutolanil
+          </label> 
+          <label>
+            <input type="checkbox" value="Azoxystrobin" class="w3-check">
+            Azoxystrobin
+          </label> 
+          <label>
+            <input type="checkbox" value="Thiabendazole" class="w3-check">
+            Thiabendazole
+          </label> 
+        </div>
+        <div class="sub-block">
+          <label>
+            <input type="checkbox" value="Boscalid" class="w3-check">
+            Boscalid
+          </label> 
+          <label>
+            <input type="checkbox" value="Thiamethoxam" class="w3-check">
+            Thiamethoxam
+          </label> 
+          <label>
+            <input type="checkbox" value="Dieldrin" class="w3-check">
+            Dieldrin
+          </label> 
+          <label>
+            <input type="checkbox" value="Pentachloroaniline" class="w3-check">
+            Pentachloroaniline
+          </label> 
+          <label>
+            <input type="checkbox" value="Pentachlorobenzene" class="w3-check">
+            Pentachlorobenzene
+          </label> 
+        </div>
+      </div>
+
+      <div class="block">
+        <label for="addition">Leave additional comments if you have any:</label><br>
+        <textarea id="addition" class="w3-input w3-border"></textarea>
+      </div>
+
+      <div class="block">
+        <input type="submit" value="submit" id="submit" class="w3-button w3-green">
+      </div>
+
+    </form>
+  </div>
+</main>
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+</body>
+</html>

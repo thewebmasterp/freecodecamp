@@ -1,0 +1,43 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+main {
+  background: #f1f1f1;
+  box-shadow: 0px 0px 22px 0px rgba(0,0,0,0.30);
+  #title {
+    margin-top: 0;
+    width: 100%;
+    padding: 5px 5px 5px 15px;
+  }
+  #description {
+    margin-top: 0;
+    margin-left: 15px;
+  }
+  #container {
+    padding: 10px;
+    #survey-form {
+      .block {
+        margin-top: 20px;
+        margin-bottom: 23px;
+        &.labelMargin label {
+          display: block;
+          &:not(.except) {
+            margin: 10px;            
+          }
+        }
+        .sub-block {
+          display: inline-block;
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+}
+
+input[type='name'], input[type='email'], input[type='number'], textarea {
+  background: #f1f1f1 !important;
+}
+

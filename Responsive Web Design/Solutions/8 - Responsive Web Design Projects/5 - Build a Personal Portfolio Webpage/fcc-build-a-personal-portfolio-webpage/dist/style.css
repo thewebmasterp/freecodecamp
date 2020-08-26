@@ -1,0 +1,97 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  background: black;
+  color: white;
+  font-family: 'Work Sans', sans-serif;
+}
+body a {
+  text-decoration: none;
+}
+
+#portfolio nav, #portfolio section, #portfolio footer {
+  width: 100%;
+}
+#portfolio #navbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+#portfolio #navbar a {
+  color: black;
+  padding: 10px 20px;
+}
+#portfolio #navbar a:hover {
+  background: black;
+  color: white;
+}
+#portfolio #welcome-section {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#portfolio #welcome-section #card {
+  border: 1px solid white;
+  padding: 20px;
+  height: 50%;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#portfolio #welcome-section #card h1 {
+  font-size: 3.5em;
+}
+#portfolio #projects {
+  background: white;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#portfolio #projects #container {
+  height: auto;
+  width: auto;
+  min-height: 300px;
+  min-width: 600px;
+  max-width: 900px;
+  padding: 20px 200px;
+}
+#portfolio #projects #container .project-tile {
+  padding: 20px;
+}
+#portfolio #projects #container .project-tile h3 {
+  font-size: 2em;
+}
+#portfolio #projects #container .project-tile h3 a {
+  color: black;
+  text-decoration: underline;
+}
+#portfolio #footer {
+  background: black;
+  padding: 20px 40px;
+}
+#portfolio #footer a {
+  color: white;
+  text-decoration: underline;
+}
+
+/*At the time of 2020 the following media query
+Is still not supported by all major browsers.
+I hope this to change soon so that my code will
+work the way it is intended to be :D*/
+@media (scripting: none) {
+  #container {
+    display: none;
+  }
+}

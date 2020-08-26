@@ -1,0 +1,100 @@
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  background: black;
+  color: white;
+  font-family: 'Work Sans', sans-serif;
+  a {
+    text-decoration: none;
+  }
+}
+
+#portfolio {
+  nav, section, footer {
+    width: 100%;
+  }
+  #navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    a {
+      color: black;
+      padding: 10px 20px;
+      &:hover {
+        background: black;
+        color: white;
+      }
+    }
+  }
+  #welcome-section {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    #card {
+      border: 1px solid white;
+      padding: 20px;
+      height: 50%;
+      width: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      h1 {
+        font-size: 3.5em;
+      }
+    }
+  }
+  #projects {
+    background: white;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    #container{
+      height: auto;
+      width: auto;
+      min-height: 300px;
+      min-width: 600px;
+      max-width: 900px;
+      padding: 20px 200px;
+      .project-tile {
+        h3 {
+          font-size: 2em;
+          a {
+            color: black;
+            text-decoration: underline;
+          }
+        }
+        padding: 20px;
+      }
+    }
+  }
+  #footer {
+    background: black;
+    padding: 20px 40px;
+    a {
+      color: white;
+      text-decoration: underline;
+    }
+  }
+}
+
+/*At the time of 2020 the following media query
+Is still not supported by all major browsers.
+I hope this to change soon so that my code will
+work the way it is intended to be :D*/
+@media (scripting: none) {
+  #container {
+    display: none;
+  }
+}

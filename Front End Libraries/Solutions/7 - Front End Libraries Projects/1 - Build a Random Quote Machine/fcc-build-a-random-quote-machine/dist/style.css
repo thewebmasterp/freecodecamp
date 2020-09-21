@@ -1,0 +1,98 @@
+html,body {
+  padding: 0;
+  margin: 0;
+}
+
+#App {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#quote-box {
+  min-width:300px;
+  width: 40vw;
+  max-width: 600px;
+  min-height: 350px;
+  height: auto;
+  background: #f9f9f9;
+  border: 4px solid rgb(27, 27, 50);
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: auto;
+  grid-template-rows: auto 50px;
+  padding: 10px;
+}
+
+blockquote{
+  font-size: 30px;
+/*   background: #f9f9f9; */
+  border-left: 10px solid #ccc;
+  margin: .5em 10px;
+  padding: 0 10px;
+  quotes: "\201C""\201D""\2018""\2019";
+  padding: 10px 20px;
+  line-height: 1.4;
+  
+  /*center vertically*/
+  margin: 0;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+blockquote:before {
+  content: open-quote;
+  display: inline;
+  height: 0;
+  line-height: 0;
+  left: -10px;
+  position: relative;
+  top: 30px;
+  color: #ccc;
+  font-size: 3em;
+}
+
+footer{
+  margin:0;
+  text-align: right;
+  font-size: 1em;
+  font-style: italic;
+}
+
+.alwaysMiddle {
+/*   height: 100%;
+/*   display: flex; */ 
+  
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+/*   width: 100%; */
+}
+
+nav .btn {
+  display: block;
+  border: 4px solid rgb(27, 27, 50);
+  background: orange;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: black;
+  font-family: verdana;
+  font-size: 1.2em;
+}
+nav .btn:hover {
+  background: #f9f9f9;
+  cursor: pointer;
+}
+nav .btn:active {
+  cursor: default;
+  background: white;
+}
+
+nav .twitter {
+  background: rgb(29,161,242);
+}

@@ -1,0 +1,107 @@
+body, html {
+  padding: 0;
+  margin: 0;
+}
+
+
+$bgColorPage: black;
+$bgColorApp: WhiteSmoke;
+$bgColorDisplay: DarkOrange;
+$colorDisplay: black;
+$bgColorButtons: DodgerBlue;
+$colorButtons: WhiteSmoke;
+
+#root {
+  background: $bgColorPage;
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#calculator {
+  background: $bgColorApp;
+  max-width: 450px;
+  min-width: 300px;
+  width: 100%;
+  height: auto;
+  display: grid;
+  grid-template-rows: 1px auto auto auto 1px;
+  grid-template-columns: 1px auto 1px;
+  grid-gap: 10px;
+  .output {
+    text-align: right;
+    &#input {
+      background: $bgColorDisplay;
+      color: $colorDisplay;
+      height: 20px;
+      grid-row: 2/3;
+      grid-column: 2/3;
+      position: relative;
+      top: 10px;
+      font-size: 1.5em;
+    }
+    &#display {
+      background: $bgColorDisplay;
+      color: $colorDisplay;
+      height: 50px;
+      grid-row: 3/4;
+      grid-column: 2/3;
+      font-size: 2.5em;
+    }
+  }
+  #numpad {
+    height: 400px;
+    grid-column: 2/3;
+    grid-row: 4/5;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 5px;
+    button {
+      background: $bgColorButtons;
+      color: $colorButtons;
+      border: none;
+      outline: none;
+      font-size: 1.2em;
+    }
+    #zero {
+      grid-column: span 2;
+    }
+    #clear {
+      grid-column: span 2;
+    }
+  }
+}
+
+.ripple-container {
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 0;
+	width: 0;
+	pointer-events: none;
+	overflow: hidden;
+}
+
+.ripple-effect {
+	margin-top: 0px;
+	margin-left: 0px;
+	width: 1px;
+	height: 1px;
+	background-color: rgba(0, 0, 0, 0.033);
+	transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+	border-radius: 50%;
+  pointer-events: none;
+  &.light {
+      background-color: rgba(255, 255, 255, 0.15);
+  }
+  &.dark {
+      background-color: rgba(0, 0, 0, 0.075);
+  }
+}
+
+

@@ -1,0 +1,16 @@
+  <script>
+    // Add your code below this line
+  
+    //I wanted to put optional chaining instead of an if statement but
+    //the challenge is not passing if I use it.. 
+    navigator.geolocation.getCurrentPosition(position => {
+      document.getElementById('data').innerHTML=`latitude: ${position.coords.latitude}<br>longitude: ${position.coords.longitude}`;
+    });
+  
+    // Add your code above this line
+  </script>
+  <h4>You are here:</h4>
+  <div id="data">
+  
+  </div>
+  

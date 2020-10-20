@@ -1,0 +1,269 @@
+const [SESSION, BREAK, TIME] = [25, 5, ['00', '00']];
+const [color1, color2] = ['DodgerBlue', 'DarkOrange'];
+const DEVELOPER_MODE = false;
+
+const styleData = num => {
+    let str = String(num);
+    if (str.length === 1) str = 0 + str;
+    return str;
+}
+
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
+class Timer {
+    constructor(min, sec) {
+      this.min = min; //the minutes left
+      this.sec = sec; //and the remainder of the minutes in seconds
+      this.running = false;
+      this.interval = null;
+    }
+  
+    init(arr) {
+      this.min = styleData(arr[0])
+      this.sec = styleData(arr[1])
+    }
+  
+    //user given function to call when timer reaches 00:00
+    onZeroZero = f => this.onZeroZerof = f;
+    
+    //default function which gets called when timer reaches 00:00
+    #zeroZero = () => {
+        console.log('zero zero !!')
+        this.stop()
+        if (this.onZeroZerof) this.onZeroZerof(); 
+    }
+    
+    //start timer
+    start = () => {
+        if (!this.running) {
+            this.running = true;
+            this.t = setInterval(() => {
+              if (this.running) {
+                  //decrease the time with 1 second
+                  let totalSeconds = Number(this.min) * 60 + Number(this.sec);
+                  totalSeconds--
+                  //convert it to mm:ss
+                  this.sec = styleData(totalSeconds % 60);
+                  this.min = styleData((totalSeconds - Number(this.sec)) / 60);
+                  //handle
+                  if (this.subscribed) this.subscribed([this.min, this.sec]);
+                  if (this.sec === '00' && this.min === '00') this.#zeroZero();
+              }
+            }, DEVELOPER_MODE ? 200 : 1000)
+        } else {
+            // throw "Already Started!"
+        }
+    }
+    
+    //pause timer
+    stop = () => {
+        if (this.running) {
+            this.running = false;
+            clearInterval(this.t)
+        } else {
+            // throw "Already Stopped!"
+        }
+    }
+   
+    get time() { 
+        return [this.min, this.sec]
+    }
+    subscribe = func => this.subscribed = func;
+    update = (data) => {
+      this.subscribed(data);
+    }
+}
+
+const Media = props => {
+  return (
+    <button onClick={(e) => props.click(e)} id={props.id} className="media" style={{
+        height: props.size+'px',
+        width: props.size+'px'
+      }}>
+      <i className={props.classes} />
+    </button>
+  )
+}
+
+const Control = props => {
+  return (
+    <div className="control" id={props.ids[1]}>
+      <div className="label" id={props.ids[1]}>{props.ids[1].split('-').map(str => str.capitalize())[0] + " Length"}</div>
+      <div className="input">
+        <Media click={ () => props.change(num => (num < 60) ? num+1 : num) } size="26" id={props.ids[0]+'-increment'} classes="fa fa-arrow-up"/>
+        <div id={props.ids[0]+'-length'} class="display" style={{
+            height: '26px',
+            lineHeight: '26px'
+          }}>{props.children}</div>
+        <Media click={ () => props.change(num => (num > 1) ? num-1 : num) } size="26" id={props.ids[0]+'-decrement'} classes="fa fa-arrow-down"/>
+      </div>
+    </div>
+  )
+}
+
+const Controls = props => {
+  const setTimer = () => {
+    if (props.timerStatus) {
+      props.setTimerStatus(false)
+    } else {
+      props.setTimerStatus(true)
+    }
+  }
+  const changeLenHandler = (ofWhat, state) => {
+    if (!props.timerStatus) {
+      return ofWhat(state)
+    }
+  }
+  return (
+    <div id="controls">
+      <div id="alignLeft">
+        <Media id="start_stop" click={() => setTimer() } size="50" classes={`fa fa-${props.timerStatus ? 'pause' : 'play'}`} />
+        <Media id="reset" click={() => props.resetCounter()} size="50" classes='fa fa-refresh' />
+      </div>
+      <div id="alignRight">
+        <div id="mode" style={{
+            left: props.mode ? "130px" : "260px",
+            background: props.mode ? color1 : color2
+          }}></div>
+        <Control change={(state) => changeLenHandler(props.changeSessionLen, state)} ids={['session', 'session-label']}>{props.session}</Control>
+        <Control change={(state) => changeLenHandler(props.changeBreakLen, state)} ids={['break', 'break-label']}>{props.break}</Control>
+      </div>
+    </div>
+  )
+}
+
+
+
+
+// let a = 1;
+let onlyOnce = true;
+
+const Time = props => {
+  const [timeLeft, setTimeLeft] = React.useState(props.currentTime);
+  
+  React.useEffect(() => {
+    if (onlyOnce) {
+      setTimeLeft(timer.time)
+      onlyOnce = false;
+    }
+    timer.subscribe(setTimeLeft);
+  }, [timeLeft]);
+  return (
+    <>
+      <div id="timer-label">{(props.mode) ? 'Session' : 'Break'}</div>
+      <div id="time-left" style={{
+          "background": (props.mode) ? color1 : color2
+        }}>{timeLeft[0] + ':' + timeLeft[1]}</div>
+    </>
+  )
+}
+
+const timer = new Timer(styleData(SESSION), '00');
+
+const App = () => {
+  const [sessionLen, changeSessionLen] = React.useState(SESSION)
+  const [breakLen, changeBreakLen] = React.useState(BREAK)
+  
+  const [currentTime, setCurrentTime] = React.useState(TIME)
+  const [timerStatus, setTimerStatus] = React.useState(false)
+  const [mode, setMode] = React.useState(true) //true - session; false - break; 
+  const beep = React.useRef(null);
+  
+  const zeroZeroHandler = () => {
+    //beep a little
+    beep.current.play()
+    
+    //toggle session/break
+    if (mode) {
+      setMode(false)
+      timer.init([styleData(breakLen), '01']) //this 01 is because the decrement happens before the display and compensation is needed.
+      timer.start();
+    } else {
+      setMode(true) 
+      timer.init([styleData(sessionLen), '01'])
+      timer.start();
+    }
+  }
+  timer.onZeroZero(zeroZeroHandler)
+  
+  const setSession = (f) => {
+    //dirtyyyyy
+    if (f) {
+      let md;
+      changeSessionLen(state => {
+        md = f(state);
+        return md;
+      })
+      setCurrentTime((time) => {
+        time = [styleData(md), '00']
+        timer.init(time)
+        timer.update(time);
+        return time;
+      })
+    }
+  }
+  
+  const setBreak = (f) => {
+    //dirtyyyyy
+    if (f) {
+      let md;
+      changeBreakLen(state => {
+        md = f(state);
+        return md;
+      })
+      setCurrentTime((time) => {
+        return [styleData(md), '00']
+      })
+    }
+  }
+  
+  const init = () => {
+    //could call it reset but I am too lazy to change it now.. 
+    
+    changeSessionLen(SESSION);
+    changeBreakLen(BREAK);
+    timer.stop()
+    timer.init([SESSION, '00']);
+    timer.update([SESSION, '00']);
+    setCurrentTime(SESSION)
+    setTimerStatus(false)
+    
+    //set the label to "session"
+    setMode(true)
+    
+    //stop the beep
+    beep.current.pause();
+    beep.current.currentTime = 0;
+  } 
+  
+  //play/pause
+  if (timerStatus) {
+    timer.start();
+  } else {
+    timer.stop();
+  }
+  
+  return (
+    <div id="Countdown">
+      <Time currentTime={currentTime} mode={mode} />
+      <Controls
+        session={sessionLen} 
+        changeSessionLen={setSession}
+        break={breakLen} 
+        changeBreakLen={setBreak} 
+        resetCounter={init} 
+        timerStatus={timerStatus}
+        setTimerStatus={setTimerStatus}
+        mode={mode}/>
+      <audio
+        id="beep"
+        preload="auto"
+        ref={beep}
+        src="https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav" />
+    </div>
+  )
+}
+
+ReactDOM.render(<App />, document.getElementById("root"))

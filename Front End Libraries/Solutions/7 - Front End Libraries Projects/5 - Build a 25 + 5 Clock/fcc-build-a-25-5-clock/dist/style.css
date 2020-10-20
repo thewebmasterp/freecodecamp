@@ -1,0 +1,83 @@
+html, body {
+  padding: 0;
+  margin: 0;
+  background: black;
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#Countdown {
+  width: 600px;
+  height: auto;
+  background: WhiteSmoke;
+  display: grid;
+  grid-template-rows: 30px auto 50px;
+  grid-template-columns: auto;
+  font-family: 'Roboto', sans-serif !important;
+}
+#Countdown #timer-label {
+  background: WhiteSmoke;
+  color: black;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#Countdown #time-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 200px;
+  transition: background 400ms;
+}
+#Countdown #controls {
+  background: WhiteSmoke;
+  display: flex;
+  justify-content: space-between;
+}
+#Countdown #controls #mode {
+  background: red;
+  height: 100%;
+  width: 130px;
+  display: inline-block;
+  position: relative;
+  left: 130px;
+  z-index: 1;
+  transition: left 800ms, background 400ms;
+}
+#Countdown #controls button {
+  border: none;
+  outline: none;
+  background: none;
+}
+#Countdown #controls button:hover {
+  cursor: pointer;
+}
+#Countdown #controls .media {
+  display: inline-block;
+}
+#Countdown #controls .control {
+  height: 100%;
+  width: 130px;
+  display: inline-block;
+  position: relative;
+  bottom: 10px;
+  z-index: 1000;
+}
+#Countdown #controls .control .label {
+  text-align: center;
+}
+#Countdown #controls .control .input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#Countdown #controls .control .input .display {
+  width: 40px;
+  text-align: center;
+  display: inline-block;
+  font-size: 1.2em;
+}

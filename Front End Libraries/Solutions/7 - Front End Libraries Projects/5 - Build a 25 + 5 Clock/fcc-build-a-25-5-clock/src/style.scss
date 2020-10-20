@@ -1,0 +1,86 @@
+html, body {
+  padding: 0;
+  margin: 0;
+  background: black;
+}
+
+$background: WhiteSmoke;
+
+#root {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#Countdown {
+  width: 600px;
+  height: auto;
+  background: $background;
+  display: grid;
+  grid-template-rows: 30px auto 50px;
+  grid-template-columns: auto;
+  font-family: 'Roboto', sans-serif !important;
+  #timer-label {
+    background: $background;
+    color: black;
+    padding-left: 10px;
+    line-height: 30px;
+  }
+  #time-left {
+    // background: orange;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 200px;
+    transition: background 400ms;
+  }
+  #controls {
+    background: $background;
+    display: flex;
+    justify-content: space-between;
+    #mode {
+      background: red;
+      height: 100%;
+      width: 130px;
+      display: inline-block;
+      position: relative;
+      left: 130px;
+      z-index: 1;
+      transition: left 800ms, background 400ms;
+    }
+    button {
+      border: none;
+      outline: none;
+      background: none;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .media {
+      display: inline-block;
+    }
+    .control {
+      height: 100%;
+      width: 130px;
+      display: inline-block;
+      position: relative;
+      bottom: 10px;
+      z-index: 1000;
+      .label {
+        text-align: center;
+      }
+      .input {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .display {
+          width: 40px;
+          text-align: center;
+          display: inline-block;
+          font-size: 1.2em;
+        }
+      }
+    }
+  }
+}

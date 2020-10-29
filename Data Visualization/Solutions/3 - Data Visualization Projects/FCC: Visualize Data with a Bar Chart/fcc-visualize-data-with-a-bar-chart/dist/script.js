@@ -1,0 +1,106 @@
+const svgElement = d3.select('#data');
+
+const tablePadding = {
+  top: 20,
+  right: 20,
+  bottom: 20,
+  left: 40 };
+
+
+const tooltipMetrics = {
+  height: 50,
+  width: 110,
+  spaceFromHover: 20,
+  fontSize: 20 };
+
+
+
+const render = (data, svg, padding, tooltipMetrics) => {
+
+  const height = svg.attr('height');
+  const width = svg.attr('width');
+
+  const computedHeight = height - padding.top - padding.bottom;
+  const computedWidth = width - padding.left - padding.right;
+
+  const years = data.map(el => new Date(el[0]));
+
+  const xScale = d3.scaleTime().
+  domain([d3.min(years), d3.max(years)]).
+  range([0, computedWidth]);
+
+  const yScale = d3.scaleLinear().
+  domain([0, d3.max(data, el => el[1])]).
+  range([computedHeight, 0]);
+
+  const g = svg.append('g').
+  attr('transform', `translate(${padding.left}, ${padding.top})`);
+
+  const axisLayer = g.append('g');
+  const axisLeft = axisLayer.append('g').attr('id', 'y-axis').call(d3.axisLeft(yScale).tickSizeOuter(0));
+  const axisBottom = axisLayer.append('g').attr('id', 'x-axis').call(d3.axisBottom(xScale).tickSizeOuter(0)).
+  attr('transform', `translate(0, ${computedHeight})`);
+
+
+  const dataLayer = g.append('g').
+  selectAll('rect').
+  data(data).
+  enter().
+  append('rect').
+  attr('height', d => computedHeight - yScale(d[1])).
+  attr('width', computedWidth / data.length).
+  attr('x', (d, i) => xScale(years[i])).
+  attr('y', d => yScale(d[1])).
+  attr('class', 'bar').
+  attr('data-date', d => d[0]).
+  attr('data-gdp', d => d[1]).
+  on('mouseover', (e, d) => {
+
+    const x = () => {
+      const x = xScale(years[data.indexOf(d)]);
+      if (x > innerHeight / 3 * 2) {
+        return x - tooltipMetrics.width - tooltipMetrics.spaceFromHover;
+      } else {
+        return x + tooltipMetrics.spaceFromHover;
+      }
+    };
+
+    const y = () => {
+      return computedHeight / 4 * 3;
+    };
+
+    const tooltip = g.append('g').
+    attr('id', 'tooltip').
+    attr('data-date', () => d[0]).
+    attr('transform', `translate(${x()}, ${y()})`);
+
+    tooltip.append('rect').
+    attr('height', tooltipMetrics.height).
+    attr('width', tooltipMetrics.width);
+
+    tooltip.append('text').
+    text(d[0].replaceAll('-', '/')).
+    style('font-size', tooltipMetrics.fontSize).
+    attr('y', tooltipMetrics.height / 2.2).
+    attr('x', tooltipMetrics.width / 2 - 48);
+
+    tooltip.append('text').
+    text(d[1]).
+    style('font-size', tooltipMetrics.fontSize).
+    attr('y', tooltipMetrics.height / 2.2 + tooltipMetrics.fontSize).
+    attr('x', tooltipMetrics.width / 2 - 48);
+  }).
+  on('mouseout', e => {
+    d3.select('#tooltip').remove();
+  });
+
+  d3.selectAll('#y-axis line').attr('x2', computedWidth);
+};
+
+d3.json('https://raw.githubusercontent.com/FreeCodeCamp/ProjectReferenceData/master/GDP-data.json').
+then(d => {
+  render(d.data, svgElement, tablePadding, tooltipMetrics);
+}).
+catch(err => {
+  throw err;
+});

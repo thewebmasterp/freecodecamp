@@ -1,0 +1,56 @@
+body {
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+}
+
+$chartBackground: #EFECEA;
+$chartTicksColor: #C0C0BB;
+$lightTextColor: #8E8883;
+$textColor: #635F5D;
+$dataColor: #E3BA22;
+$dataColorSecondary: #E6842A;
+
+.dataWrapper {
+  height: auto;
+  width: auto;
+  background: $chartBackground;
+  padding: 20px;
+  color: $textColor;
+  #title {
+    margin: 0;
+  }
+  #data {
+    .bar {
+      fill: $dataColor;
+      &:hover {
+        fill: $dataColorSecondary;
+      }
+    }
+    .domain {
+       color: $chartTicksColor;
+    }
+    .tick {
+      text {
+        color: $lightTextColor;
+      }
+      line {
+        color: $chartTicksColor;
+      }
+    }
+    #tooltip {
+      text {
+        fill: $textColor !important;
+      }
+      rect {
+        fill: $chartTicksColor;
+        stroke: $textColor;
+        stroke-width: 2px;
+      }
+    }
+  }
+}
